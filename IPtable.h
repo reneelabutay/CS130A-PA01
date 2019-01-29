@@ -31,16 +31,10 @@ class IPtable {
  private:
   int size;
 
-  int a = 10;
-  int b = 89;
-  int c = 210;
-  int d = 162;
-
-  /*//generate 4 random integers                                                                                         
-  int a = rand() % 257;                                                                                                    int b = rand() % 257;                                                                                                  
-  int c = rand() % 257;                                                                                                  
-  int d = rand() % 257;                                                                                                  
-  */
+  int a;
+  int b;
+  int c;
+  int d;
 
   int numInserted;
   int numDeleted;
