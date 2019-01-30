@@ -36,8 +36,6 @@ private:
   int size;
 
   int b = 0; //2^b = 1st line of input file
-
-  int length;
  
   std::vector<int> randomInts;
 

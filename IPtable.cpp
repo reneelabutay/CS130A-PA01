@@ -15,12 +15,10 @@ IPtable::IPtable(int size) {
   this->numDeleted = 0;
   this->singleSlots = 0;
 
-  this->a = 10;
-  this->b = 89;
-  this->c = 210;
-  this->d = 162;
-  //this->a = rand() % 257;
-  //do this for the rest before submitting
+  this->a = rand() % 257;
+  this->b = rand() % 257;
+  this->c = rand() % 257;
+  this->d = rand() % 257;
 
   this->maxCollisions.first = -1;
   this->maxCollisions.second = -1;

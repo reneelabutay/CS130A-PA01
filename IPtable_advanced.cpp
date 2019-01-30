@@ -9,40 +9,27 @@
 
 IPtable_advanced::IPtable_advanced(int input) {
   this->b = (int)log2(input);
-  this->length = (int)ceil(32/this->b);
-  //find the next prime from size
+  
   this->size = findNextPrime(input);
   table.resize(size);
-  
-  randomInts.push_back(13);
-  randomInts.push_back(2);
-  randomInts.push_back(8);
-  randomInts.push_back(3);
-  randomInts.push_back(14);
-  randomInts.push_back(5);
-  randomInts.push_back(11);
-  randomInts.push_back(10);
-  
-  //MAKE SURE TO REPLACE CODE ABOVE WITH...
-  
-  /*
-    for(int i = 0; i < randomInts.size(); i++) {
-    randomInts[i] = rand() % size;
-    }
-  */
 
+  randomInts.resize(ceil(((double)32)/this->b));  
+  for(int i = 0; i < (int)randomInts.size(); i++) {
+    randomInts[i] = rand() % size;
+  }
+  
   this->numInserted = 0;
   this->numDeleted = 0;
   this->singleSlots = 0;
-
   this->emptySlots = size;
   this->maxCollisions.first = -1;
   this->maxCollisions.second = -1;
 }
 
+//hashes IP address into slot in table
 int IPtable_advanced::hash(std::string IP) {
 
-  std::vector<int> inputs; //will store groups of the bytes separated by .  
+  std::vector<int> inputs; //will store groups of the bytes separated by '.'  
   
   std::istringstream iss(IP);
   std::string num;
@@ -57,12 +44,10 @@ int IPtable_advanced::hash(std::string IP) {
   //convert each byte to binary, then add to a string
   for(int i = 0; i < (int)inputs.size(); i++) {
     std::bitset<8> bit(inputs[i]);
-
     allBinaryNum += bit.to_string();
   }
 
   std::vector<std::string> binarySubs;
-  
   for(int i = 0; i < (int)allBinaryNum.length();) {
     if(i == 0 && (32%this->b)!= 0) {
       binarySubs.push_back(allBinaryNum.substr(i, (32%this->b)));
@@ -70,21 +55,14 @@ int IPtable_advanced::hash(std::string IP) {
     } else {
       binarySubs.push_back(allBinaryNum.substr(i,b));
       i += b;
-    }
-    
+    }    
   }
-
-  for(int i = 0; i < (int)binarySubs.size(); i++) {
-    std::cout<<binarySubs[i];
-    std::cout<<" ";
-  }
-  std::cout<<std::endl;
 
   std::vector<int> values;
-
   for(int i = 0; i < (int)binarySubs.size(); i++) {
     values.push_back(std::stoi(binarySubs[i], nullptr, 2));
   }
+  
   int sum = 0;
   for(int i = 0; i < (int)values.size(); i++) {
     sum += (values[i] * this->randomInts[i]);
@@ -94,7 +72,6 @@ int IPtable_advanced::hash(std::string IP) {
 }
 
 int IPtable_advanced::findNextPrime(int num) {
-  std::cout<<"here"<<std::endl;
   int prime = num;
   while(!isPrime(prime)) {
     prime++;
@@ -103,9 +80,7 @@ int IPtable_advanced::findNextPrime(int num) {
 }
 
 bool IPtable_advanced::isPrime(int num) {
-  //bool prime = false;
   int it = 2;
-
   while(it <= (int)sqrt(num)) {
     if(num % it == 0) {
       return false;
@@ -115,11 +90,6 @@ bool IPtable_advanced::isPrime(int num) {
   }
   return true;
 }
-
-//tobinary
-//todecimal
-//findnextprime
-
 
 //Check if it exists in the table already
 bool IPtable_advanced::exists(std::string IP) {
