@@ -1,6 +1,6 @@
-//main.cpp
+//main2.cpp
 
-#include "IPtable.h"
+#include "IPtable_advanced.h"
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -11,13 +11,12 @@ int main () {
   std::string line;
 
   std::getline(std::cin,line);
-  //std::cout<<"line: "<<line<<std::endl;;
+  //std::cout<<"line: "<<line<<std::endl;;                                                                        
   int size = std::stoi(line);
-  IPtable table(size);
+  IPtable_advanced table(size);
 
-  //  std::cout<<"constructed"<<std::endl;
   while(std::getline(std::cin,line)) {
-    //call stat
+    //call stat                                                                                                   
     if(line.length() == 4) {
       table.stat();
     } else {
@@ -25,11 +24,11 @@ int main () {
       std::string IPaddress = line.substr(7);
 
       if(command == "insert") {
-	table.insert(IPaddress);
+        table.insert(IPaddress);
       } else if (command == "delete") {
-	table.remove(IPaddress);
+        table.remove(IPaddress);
       } else if (command == "lookup") {
-	std::cout << table.lookup(IPaddress) <<std::endl;
+        std::cout << table.lookup(IPaddress) <<std::endl;
       }
     }
     }
